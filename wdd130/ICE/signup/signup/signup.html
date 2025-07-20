@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Feed Sign Up</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: rgb(120, 96, 64);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 1rem;
+    }
+
+    #formContainer {
+      background-color: #fdfdfd;
+      color: #333;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 4px solid #191970;
+    }
+
+
+    .imageWrapper {
+      position: relative;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    #christImage {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      display: block;
+    }
+
+    .imageOverlayText {
+      position: absolute;
+      top: 3%;
+      left: 55%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      padding: 0.3rem 0.8rem;
+      border-radius: 5px;
+      text-align: center;
+      max-width: 250px;
+      
+    }
+
+    h3 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    #closeBtn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: crimson;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: 100%;
+    }
+
+    .gender {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    section {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    button[type="submit"] {
+      padding: 0.7rem;
+      background-color: seagreen;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    #imageBanner {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    #imageBanner img {
+      height: 60px;
+      max-width: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
+    }
+
+    #imageBanner img:hover {
+      transform: scale(1.1);
+    }
+
+    #output {
+      margin-top: 2rem;
+      background: white;
+      color: black;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="formContainer">
+    <div class="imageWrapper">
+      <img id="christImage" src="images/jesus_feeds_5000.jpeg" alt="Jesus Feeds 5000" />
+      <h2 class="imageOverlayText">Welcome to the Daily Scripture Feed</h2>
+    </div>
+
+    <h3>Sign Up for Daily Scripture Feed</h3>
+
+    <form id="myForm">
+      <button type="button" id="closeBtn">X</button>
+
+      <label for="username">User Name:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label>Gender:</label>
+      <div class="gender">
+        <input type="radio" id="male" name="gender" value="male" required>
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="female" required>
+        <label for="female">Female</label>
+      </div>
+
+      <section>
+        <input type="checkbox" id="newsletter" name="newsletter">
+        <label for="newsletter">Subscribe to newsletter</label>
+      </section>
+
+      <section>
+        <input type="checkbox" id="conditions" name="conditions" required>
+        <label for="conditions">I acknowledge the terms and conditions</label>
+      </section>
+
+      <section>
+        <button type="submit">Submit</button>
+      </section>
+    </form>
+    <div id="imageBanner">
+      <img src="images/book_of_mormon.webp" alt="Book of Mormon" />
+      <img src="images/old_testament.webp" alt="Old Testament" />
+      <img src="images/new_testament.webp" alt="New Testament" />
+      <img src="images/doctrine_and_covenants.webp" alt="Doctrine and Covenants" />
+    </div>
+  </div>
+
+  <div id="output"></div>
+
+  <script>
+    document.getElementById("closeBtn").addEventListener("click", function () {
+      document.getElementById("formContainer").style.display = "none";
+    });
+
+    const form = document.getElementById('myForm');
+    const output = document.getElementById('output');
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+      const entries = [];
+
+      for (const [key, value] of formData.entries()) {
+        if (key === "password") {
+          entries.push(`<strong>${key}</strong>: ${value} (you should probably encrypt the password)`);
+        } else {
+          entries.push(`<strong>${key}</strong>: ${value}`);
+        }
+      }
+
+      output.innerHTML = `
+        <br>
+        <h3>Here is the data that would be sent to the server:</h3>
+        <ul>
+          ${entries.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+      `;
+    });
+  </script>
+</body>
+</html>
